@@ -1,0 +1,52 @@
+\section{Estado del Arte y Antecedentes}
+
+Aunque los sistemas satelitales GEO han madurado considerablemente en las últimas décadas, la búsqueda de confiabilidad sigue generando enfoques divergentes. Resulta revelador observar cómo la industria ha evolucionado desde simples duplicaciones de hardware hacia arquitecturas más inteligentes que incorporan diversidad y conmutación dinámica.
+
+\subsection{Arquitecturas de redundancia en GEO}
+
+Uno de los desafíos persistentes al diseñar sistemas satelitales de alta disponibilidad radica en equilibrar complejidad y robustez. Las configuraciones clásicas 1+1, donde un sistema completo permanece en espera caliente, dominaron las primeras generaciones. Sin embargo, análisis detallados revelan limitaciones importantes cuando los fallos provienen de causas comunes o degradaciones graduales.
+
+Estudios que aplican metodologías FMEA a payloads GEO demuestran que la identificación temprana de modos de fallo críticos permite mejoras sustanciales en el tiempo medio entre fallos \cite{ReliabilityGEO2013}. Particularmente llamativo es el hecho de que arquitecturas híbridas —que combinan redundancia a nivel de transpondedor, haz y estación terrena— tienden a ofrecer mejor relación costo-beneficio en escenarios reales. 
+
+En la práctica, estas soluciones exigen protocolos de conmutación rápidos y mecanismos de monitoreo continuo. No obstante, cabe matizar que el aumento de redundancia eleva significativamente el consumo de masa y potencia en órbita, aspectos críticos para satélites como el VENESAT-2.
+
+\begin{table}[h]
+\centering
+\caption{Comparación de arquitecturas de redundancia satelital GEO}
+\label{tab:arquitecturas}
+\begin{tabular}{lccc}
+\hline
+\textbf{Arquitectura} & \textbf{Disponibilidad típica} & \textbf{Complejidad} & \textbf{Costo relativo} \\
+\hline
+Sin redundancia & 99.0 -- 99.5\% & Baja & 1.0 \\
+1+1 (caliente) & 99.8 -- 99.95\% & Media & 1.8 -- 2.2 \\
+Diversidad satelital & >99.95\% & Alta & 2.5+ \\
+Híbrida (multi-banda/terrestre) & >99.99\% & Muy alta & 3.0+ \\
+\hline
+\end{tabular}
+\end{table}
+
+La Tabla 2 sintetiza las principales alternativas consideradas en este estudio. La selección final dependerá del balance entre requisitos operativos venezolanos y restricciones presupuestarias.
+
+\subsection{Atenuación en bandas Ku/Ka en regiones tropicales}
+
+Particularmente desafiante resulta el comportamiento de la propagación en bandas superiores bajo climas tropicales. Venezuela, con su alta pluviosidad en gran parte del territorio, enfrenta condiciones que degradan severamente el enlace en frecuencias Ku y especialmente Ka.
+
+Modelos recomendados por la ITU-R constituyen la base estándar para estos cálculos. El modelo de atenuación por lluvia se expresa típicamente como:
+
+\begin{equation}
+A = k R^{\alpha} L_{eff}
+\label{eq:itu_rain}
+\end{equation}
+
+donde \(A\) representa la atenuación en dB, \(R\) la tasa de lluvia en mm/h, \(k\) y \(\alpha\) coeficientes dependientes de frecuencia y polarización, y \(L_{eff}\) la longitud efectiva del camino. 
+
+Mapas específicos para enlaces del Simón Bolívar y su sucesor resaltan que la atenuación excedida durante el 0.01\% del tiempo puede superar los 15 dB en banda Ka en ciertas regiones \cite{RainAttenVenezuela2023}. Esta realidad obliga a incorporar márgenes considerables o técnicas de mitigación como diversidad de sitio y codificación adaptativa. En muchos casos estudiados, ignorar estas particularidades tropicales ha conducido a subestimaciones graves de disponibilidad real.
+
+\subsection{Casos de estudio internacionales}
+
+Lejos de ser un asunto resuelto, la evolución hacia sistemas de alto rendimiento (HTS) ha redefinido las expectativas de redundancia. Revisiones recientes del estado del arte en satélites de alto throughput revelan una clara tendencia hacia arquitecturas multi-satélite y constelaciones híbridas GEO-LEO que mejoran notablemente la resiliencia \cite{HTSSurvey2025}.
+
+Casos como el de Brasil con su sistema SGDC o las experiencias europeas con Eutelsat demuestran que la combinación de redundancia orbital y diversidad terrestre logra disponibilidades superiores al 99.99\% incluso en regiones con fuerte precipitación. Sin embargo, estos proyectos también exponen limitaciones: costos elevados de implementación y la necesidad de ecosistemas terrestres maduros para soportar la conmutación automática.
+
+Resulta instructivo contrastar estos desarrollos internacionales con el contexto venezolano. Mientras las soluciones más avanzadas incorporan inteligencia artificial para predicción de fallos y enrutamiento dinámico, el VENESAT-2 debe priorizar robustez probada y mantenibilidad bajo restricciones locales. Este estudio busca precisamente cerrar esa brecha, adaptando las mejores prácticas documentadas a las condiciones específicas del país.
